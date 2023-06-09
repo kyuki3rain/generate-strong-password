@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "vadimcn.vscode-lldb",
+    "serayuzgur.crates",
+    "tamasfe.even-better-toml",
+    "github.copilot",
+    "ms-vscode.hexeditor",
+    "ms-ceintl.vscode-language-pack-ja",
+    "mutantdino.resourcemonitor",
+    "rust-lang.rust-analyzer"
+  ]
+}
