@@ -1,6 +1,7 @@
 use crate::password_generator::PasswordGenerator;
 use clap::Parser;
 
+mod character_set;
 mod password_generator;
 
 #[derive(Parser, Debug)]
@@ -43,7 +44,7 @@ fn main() {
     }
 
     let mut rng = rand::thread_rng();
-    let generator = PasswordGenerator::new(password_length, weights, args.symbol_sets);
+    let generator = PasswordGenerator::new(password_length, weights, &args.symbol_sets);
 
     println!("↓↓↓ Generated password ↓↓↓\n{}", generator.gen(&mut rng));
 }

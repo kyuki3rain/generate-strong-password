@@ -2,24 +2,26 @@ use rand::{
     distributions::WeightedIndex, prelude::Distribution, rngs::ThreadRng, seq::SliceRandom,
 };
 
+use crate::character_set::CharacterSet;
+
 static UPPERCASE_SETS: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static LOWERCASE_SETS: &str = "abcdefghijklmnopqrstuvwxyz";
 static NUMERIC_SETS: &str = "0123456789";
 
 pub struct PasswordGenerator {
     length: usize,
-    character_sets: Vec<Vec<char>>,
+    character_sets: Vec<CharacterSet>,
     weights: WeightedIndex<usize>,
     includes: Vec<bool>,
 }
 
 impl PasswordGenerator {
-    pub fn new(length: usize, weights: Vec<usize>, symbol_sets: String) -> Self {
-        let character_sets: Vec<Vec<char>> = vec![
-            UPPERCASE_SETS.chars().collect::<Vec<char>>(),
-            LOWERCASE_SETS.chars().collect::<Vec<char>>(),
-            NUMERIC_SETS.chars().collect::<Vec<char>>(),
-            symbol_sets.chars().collect::<Vec<char>>(),
+    pub fn new(length: usize, weights: Vec<usize>, symbol_sets: &str) -> Self {
+        let character_sets: Vec<CharacterSet> = vec![
+            CharacterSet::new(UPPERCASE_SETS),
+            CharacterSet::new(LOWERCASE_SETS),
+            CharacterSet::new(NUMERIC_SETS),
+            CharacterSet::new(symbol_sets),
         ];
 
         let includes = weights.iter().map(|&x| x != 0).collect::<Vec<bool>>();
@@ -53,9 +55,7 @@ impl PasswordGenerator {
     }
 
     fn choose(&self, rng: &mut ThreadRng) -> char {
-        *self.character_sets[self.weights.sample(rng)]
-            .choose(rng)
-            .unwrap()
+        self.character_sets[self.weights.sample(rng)].choose(rng)
     }
 
     fn gen_minimum_password(&self, rng: &mut ThreadRng) -> Vec<char> {
@@ -63,7 +63,7 @@ impl PasswordGenerator {
 
         for (i, character_set) in self.character_sets.iter().enumerate() {
             if self.includes[i] {
-                password.push(*character_set.choose(rng).unwrap());
+                password.push(character_set.choose(rng));
             }
         }
 
