@@ -23,7 +23,7 @@ struct Args {
     #[arg(short, long, default_value_t = 4)]
     numbers: usize,
 
-    /// Sets the symbols to include in the password
+    /// Includes symbols in the password
     #[arg(short, long, default_value_t = 1)]
     symbols: usize,
 
