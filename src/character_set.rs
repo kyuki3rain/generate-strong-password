@@ -36,3 +36,41 @@ impl CharacterSet {
         self.0 = unique_chars;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let character_set = CharacterSet::new("abcabcabc");
+
+        assert_eq!(character_set.0, vec!['a', 'b', 'c']);
+    }
+
+    #[test]
+    fn test_choose() {
+        let mut rng = rand::thread_rng();
+        let character_set = CharacterSet::new("abc");
+
+        assert!(character_set.0.contains(&character_set.choose(&mut rng)));
+    }
+
+    #[test]
+    fn test_sort() {
+        let mut character_set = CharacterSet::new("cba");
+
+        character_set.sort();
+
+        assert_eq!(character_set.0, vec!['a', 'b', 'c']);
+    }
+
+    #[test]
+    fn test_remove_duplicates() {
+        let mut character_set = CharacterSet::new("abcabcabc");
+
+        character_set.remove_duplicates();
+
+        assert_eq!(character_set.0, vec!['a', 'b', 'c']);
+    }
+}

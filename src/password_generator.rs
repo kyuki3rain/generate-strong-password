@@ -70,3 +70,33 @@ impl PasswordGenerator {
         password
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new() {
+        let password_generator = PasswordGenerator::new(10, vec![1, 1, 1, 1], "!@#$%^&*()");
+
+        assert_eq!(password_generator.length, 10);
+        assert_eq!(password_generator.includes, vec![true, true, true, true]);
+    }
+
+    #[test]
+    fn test_gen() {
+        let mut rng = rand::thread_rng();
+        let password_generator = PasswordGenerator::new(10, vec![1, 1, 1, 1], "!@#$%^&*()");
+
+        assert_eq!(password_generator.gen(&mut rng).len(), 10);
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_gen_panic() {
+        let mut rng = rand::thread_rng();
+        let password_generator = PasswordGenerator::new(3, vec![1, 1, 1, 1], "!@#$%^&*()");
+
+        password_generator.gen(&mut rng);
+    }
+}
