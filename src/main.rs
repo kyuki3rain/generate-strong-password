@@ -34,7 +34,8 @@ fn main() {
     let include_uppercase = args.uppercase;
     let include_lowercase = args.lowercase;
     let include_numbers = args.numbers;
-    let symbol_sets: Vec<char> = args.symbols.chars().collect();
+
+    let mut symbol_sets: Vec<char> = args.symbols.chars().collect();
     let include_symbols = !symbol_sets.is_empty();
 
     if !include_uppercase && !include_lowercase && !include_numbers && !include_symbols {
@@ -42,43 +43,53 @@ fn main() {
         process::exit(1);
     }
 
-    let character_sets: Vec<Vec<char>> = vec![
-        vec![
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
-            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-        ],
-        vec![
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-            'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-        ],
-        vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        symbol_sets,
-    ];
-
-    let mut available_character_sets: Vec<usize> = Vec::new();
     let mut rng = rand::thread_rng();
     let mut password = Vec::new();
 
+    let mut character_sets: Vec<char> = Vec::new();
+    let mut offset = 0;
+
     if include_uppercase {
-        available_character_sets.push(0);
-        password.push(*character_sets[0].choose(&mut rng).unwrap());
+        let mut uppercase_sets = ('A'..='Z').collect::<Vec<char>>();
+        password.push(*uppercase_sets.choose(&mut rng).unwrap());
+        offset += 1;
+
+        character_sets.append(&mut uppercase_sets);
     }
     if include_lowercase {
-        available_character_sets.push(1);
-        password.push(*character_sets[1].choose(&mut rng).unwrap());
+        let mut lowercase_sets = ('a'..='z').collect::<Vec<char>>();
+        password.push(*lowercase_sets.choose(&mut rng).unwrap());
+        offset += 1;
+
+        character_sets.append(&mut lowercase_sets);
     }
     if include_numbers {
-        available_character_sets.push(2);
-        password.push(*character_sets[2].choose(&mut rng).unwrap());
+        let mut number_sets = ('0'..='9').collect::<Vec<char>>();
+        password.push(*number_sets.choose(&mut rng).unwrap());
+        offset += 1;
+
+        // 数字は3倍出やすいようにする
+        character_sets.append(&mut number_sets);
+        character_sets.append(&mut number_sets);
+        character_sets.append(&mut number_sets);
     }
     if include_symbols {
-        available_character_sets.push(3);
-        password.push(*character_sets[3].choose(&mut rng).unwrap());
+        password.push(*symbol_sets.choose(&mut rng).unwrap());
+        offset += 1;
+
+        character_sets.append(&mut symbol_sets);
     }
 
-    for _ in 0..password_length - available_character_sets.len() {
-        let set = &character_sets[*available_character_sets.choose(&mut rng).unwrap()];
-        password.push(*set.choose(&mut rng).unwrap());
+    if password_length < offset {
+        eprintln!(
+            "Password length must be greater than or equal to {}",
+            offset
+        );
+        process::exit(1);
+    }
+
+    for _ in 0..password_length - offset {
+        password.push(*character_sets.choose(&mut rng).unwrap());
     }
 
     password.shuffle(&mut rng);
