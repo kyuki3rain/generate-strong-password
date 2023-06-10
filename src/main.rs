@@ -1,5 +1,5 @@
 use clap::Parser;
-use rand::Rng;
+use rand::seq::SliceRandom;
 use std::process;
 
 #[derive(Parser, Debug)]
@@ -56,27 +56,34 @@ fn main() {
     ];
 
     let mut available_character_sets: Vec<usize> = Vec::new();
+    let mut rng = rand::thread_rng();
+    let mut password = Vec::new();
+
     if include_uppercase {
         available_character_sets.push(0);
+        password.push(*character_sets[0].choose(&mut rng).unwrap());
     }
     if include_lowercase {
         available_character_sets.push(1);
+        password.push(*character_sets[1].choose(&mut rng).unwrap());
     }
     if include_numbers {
         available_character_sets.push(2);
+        password.push(*character_sets[2].choose(&mut rng).unwrap());
     }
     if include_symbols {
         available_character_sets.push(3);
+        password.push(*character_sets[3].choose(&mut rng).unwrap());
     }
 
-    let mut rng = rand::thread_rng();
-    let mut password = String::new();
-    for _ in 0..password_length {
-        let character_set_index = rng.gen_range(0..available_character_sets.len());
-        let set = &character_sets[available_character_sets[character_set_index]];
-        let character_index = rng.gen_range(0..set.len());
-        password.push(set[character_index]);
+    for _ in 0..password_length - available_character_sets.len() {
+        let set = &character_sets[*available_character_sets.choose(&mut rng).unwrap()];
+        password.push(*set.choose(&mut rng).unwrap());
     }
+
+    password.shuffle(&mut rng);
+
+    let password: String = password.into_iter().collect();
 
     println!("↓↓↓ Generated password ↓↓↓\n{}", password);
 }
