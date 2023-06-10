@@ -1,5 +1,5 @@
 use clap::Parser;
-use rand::{seq::SliceRandom, Rng};
+use rand::seq::SliceRandom;
 use std::process;
 
 #[derive(Parser, Debug)]
@@ -57,7 +57,7 @@ fn main() {
 
     let mut available_character_sets: Vec<usize> = Vec::new();
     let mut rng = rand::thread_rng();
-    let mut password = String::new();
+    let mut password = Vec::new();
 
     if include_uppercase {
         available_character_sets.push(0);
@@ -80,6 +80,10 @@ fn main() {
         let set = &character_sets[*available_character_sets.choose(&mut rng).unwrap()];
         password.push(*set.choose(&mut rng).unwrap());
     }
+
+    password.shuffle(&mut rng);
+
+    let password: String = password.into_iter().collect();
 
     println!("↓↓↓ Generated password ↓↓↓\n{}", password);
 }
