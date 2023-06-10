@@ -8,7 +8,7 @@ mod password_generator;
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Sets the length of the password
-    #[arg(short, long, default_value_t = 12)]
+    #[arg(short, long, default_value_t = 16)]
     length: usize,
 
     /// Includes uppercase letters in the password
@@ -23,7 +23,7 @@ struct Args {
     #[arg(short, long, default_value_t = 4)]
     numbers: usize,
 
-    /// Sets the symbols to include in the password
+    /// Includes symbols in the password
     #[arg(short, long, default_value_t = 1)]
     symbols: usize,
 
