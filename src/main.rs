@@ -6,24 +6,24 @@ use std::process;
 #[command(author, version, about, long_about = None)]
 struct Args {
     /// Sets the length of the password
-    #[arg(short, long, default_value_t=12)]
+    #[arg(short, long, default_value_t = 12)]
     length: usize,
 
     /// Includes uppercase letters in the password
-    #[arg(short='C', long)]
+    #[arg(short = 'C', long)]
     uppercase: bool,
 
     /// Includes lowercase letters in the password
-    #[arg(short='c', long)]
+    #[arg(short = 'c', long)]
     lowercase: bool,
-    
+
     /// Includes numbers in the password
     #[arg(short, long)]
     numbers: bool,
 
-    /// Includes symbols in the password
-    #[arg(short, long)]
-    symbols: bool,
+    /// Sets the symbols to include in the password
+    #[arg(short, long, default_value_t = String::from(""))]
+    symbols: String,
 }
 
 fn main() {
@@ -34,7 +34,8 @@ fn main() {
     let include_uppercase = args.uppercase;
     let include_lowercase = args.lowercase;
     let include_numbers = args.numbers;
-    let include_symbols = args.symbols;
+    let symbol_sets: Vec<char> = args.symbols.chars().collect();
+    let include_symbols = !symbol_sets.is_empty();
 
     if !include_uppercase && !include_lowercase && !include_numbers && !include_symbols {
         eprintln!("Please specify at least one type of character to include");
@@ -43,18 +44,15 @@ fn main() {
 
     let character_sets: Vec<Vec<char>> = vec![
         vec![
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-            'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
+            'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
         ],
         vec![
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-            's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+            'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         ],
         vec!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        vec![
-            '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', ']', '{',
-            '}', '|', ';', ':', ',', '.', '/',
-        ],
+        symbol_sets,
     ];
 
     let mut available_character_sets: Vec<usize> = Vec::new();
