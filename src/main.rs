@@ -11,19 +11,19 @@ struct Args {
     #[arg(short, long, default_value_t = 16)]
     length: usize,
 
-    /// Includes uppercase letters in the password
+    /// Sets the weights for uppercase letters in the password
     #[arg(short = 'C', long, default_value_t = 4)]
     uppercase: usize,
 
-    /// Includes lowercase letters in the password
+    /// Sets the weights for lowercase letters in the password
     #[arg(short = 'c', long, default_value_t = 4)]
     lowercase: usize,
 
-    /// Includes numbers in the password
+    /// Sets the weights for numbers in the password
     #[arg(short, long, default_value_t = 4)]
     numbers: usize,
 
-    /// Includes symbols in the password
+    /// Sets the weights for symbols in the password
     #[arg(short, long, default_value_t = 1)]
     symbols: usize,
 
