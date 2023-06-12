@@ -27,7 +27,7 @@ generate-strong-password [OPTIONS]
 - -c, --lowercase <LOWERCASE>     : 小文字のアルファベットの重みを設定します。デフォルトは`4`です。
 - -n, --numbers <NUMBERS>         : 数字の重みを設定します。デフォルトは`4`です。
 - -s, --symbols <SYMBOLS>         : 記号の重みを設定します。デフォルトは`1`です。
--     --symbol-sets <SYMBOL_SETS> : パスワードに含める記号セットを設定します。デフォルトは!$%&'()*+,/;<=>?[]^{}~です。
+-   , --symbol-sets <SYMBOL-SETS> : パスワードに含める記号セットを設定します。デフォルトは`!$%&'()*+,/;<=>? []^{}~`です。
 - -h, --help                      : ヘルプを表示します。
 - -V, --version                   : バージョンを表示します。
 
@@ -40,7 +40,7 @@ generate-strong-password
 
 デフォルトの設定でパスワードが生成されます。
 
-```
+```shell
 generate-strong-password -l 12 -C 1 -c 0 -n 1 -s 0
 ```
 
@@ -49,13 +49,13 @@ generate-strong-password -l 12 -C 1 -c 0 -n 1 -s 0
 重みが0以外の種類の文字は必ず1つ以上含まれます。
 
 
-```
+```shell
 generate-strong-password --symbol-sets "@%&"
 ```
 
 登場する記号が`@%&`の３種類の中から選ばれてパスワードが生成されます。
 
-```
+```shell
 generate-strong-password -l 3
 ```
 

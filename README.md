@@ -20,14 +20,14 @@ source ~/.bashrc
 generate-strong-password [OPTIONS]
 ```
 
-Available options are: -l, -length <LENGTH> : sets the length of the password.
+Available options are:
 
-- -l, --length <LENGTH>           : Sets the length of the password. Default is ``16``.
+- -l, --length <LENGTH>           : Sets the length of the password. Default is `16`.
 - -C, --uppercase <UPPERCASE>     : Sets the weight of uppercase alphabets. Default is `4`.
 - -c, --lowercase <LOWERCASE>     : set weight of lowercase alphabet. Default is `4`.
 - -n, --numbers <NUMBERS>         : set weights of numbers. Default is `4`.
 - -s, --symbols <SYMBOLS>         : set weights of symbols. Default is `1`.
--     --symbol-sets <SYMBOL_SETS> : Sets symbol sets to be included in the password. Default is ! $%&'()*+,/;<=>? []^{}~.
+-   , --symbol-sets <SYMBOL-SETS> : Sets symbol sets to be included in the password. Default is `!$%&'()*+,/;<=>? []^{}~`
 - -h, --help                      : Display help.
 - -V, --version                   : Display version.
 
@@ -36,11 +36,11 @@ Available options are: -l, -length <LENGTH> : sets the length of the password.
 
 ```shell
 generate-strong-password
-````
+```
 
 Generates a password with default settings.
 
-````
+```shell
 generate-strong-password -l 12 -C 1 -c 0 -n 1 -s 0
 ```
 
@@ -49,13 +49,13 @@ Generates a 12-character password with equal parts uppercase letters and numbers
 It must contain at least one character of any kind with a non-zero weight.
 
 
-````
+```shell
 generate-strong-password --symbol-sets "@%&"
 ```
 
-The password will be generated with one of the three types of symbols that appear as ``@%&``.
+The password will be generated with one of the three types of symbols that appear as `@%&`.
 
-```
+```shell
 generate-strong-password -l 3
 ```
 
@@ -70,5 +70,3 @@ This project is released under the MIT License. See the [LICENSE](https://github
 - [kyuki3rain](https://github.com/kyuki3rain)
 
 Please report any questions or bugs to the Issues page.
-
-Translated with www.DeepL.com/Translator (free version)
