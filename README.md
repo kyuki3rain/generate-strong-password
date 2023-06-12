@@ -1,58 +1,74 @@
 # generate-strong-password
 
-generate-strong-passwordは、強力なパスワードを生成するためのコマンドラインツールです。このツールを使用すると、指定した長さや文字の組み合わせに基づいてセキュアなパスワードを作成することができます。
+generate-strong-password is a command line tool for generating strong passwords. This tool allows you to create a secure password based on a specified length or combination of characters.
 
-## インストール方法
+## Installations
 
 ```shell
+sudo mkdir -p /usr/local/generate-strong-password/bin
 curl -L https://github.com/kyuki3rain/generate-strong-password/releases/download/v0.1.0/generate-strong-password_v0.1.0_x86_64-unknown-linux-musl.tar.gz -o ./generate-strong-password.tar.gz
 tar -zxvf generate-strong-password.tar.gz
 rm generate-strong-password.tar.gz
+sudo mv ./generate-strong-password /usr/local/generate-strong-password/bin
+echo 'export PATH=$PATH:/usr/local/generate-strong-password/bin' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-## 使用法
+## Usage
 
 ```shell
 generate-strong-password [OPTIONS]
 ```
 
-利用可能なオプションは以下の通りです。
+Available options are: -l, -length <LENGTH> : sets the length of the password.
 
-- -l, --length <LENGTH>          : パスワードの長さを設定します。デフォルトは`16`です。
-- -C, --uppercase <UPPERCASE>    : 大文字のアルファベットの重みを設定します。デフォルトは`4`です。
-- -c, --lowercase <LOWERCASE>    : 小文字のアルファベットの重みを設定します。デフォルトは`4`です。
-- -n, --numbers <NUMBERS>        : 数字の重みを設定します。デフォルトは`4`です。
-- -s, --symbols <SYMBOLS>        : 記号の重みを設定します。デフォルトは`1`です。
--     --symbol-sets <SYMBOL_SETS>: パスワードに含める記号セットを設定します。デフォルトは!$%&'()*+,/;<=>?[]^{}~です。
-- -h, --help                     : ヘルプを表示します。
-- -V, --version                  : バージョンを表示します。
+- -l, --length <LENGTH>           : Sets the length of the password. Default is ``16``.
+- -C, --uppercase <UPPERCASE>     : Sets the weight of uppercase alphabets. Default is `4`.
+- -c, --lowercase <LOWERCASE>     : set weight of lowercase alphabet. Default is `4`.
+- -n, --numbers <NUMBERS>         : set weights of numbers. Default is `4`.
+- -s, --symbols <SYMBOLS>         : set weights of symbols. Default is `1`.
+-     --symbol-sets <SYMBOL_SETS> : Sets symbol sets to be included in the password. Default is ! $%&'()*+,/;<=>? []^{}~.
+- -h, --help                      : Display help.
+- -V, --version                   : Display version.
 
 
-## 使用例
+## Examples
 
 ```shell
 generate-strong-password
-```
+````
 
-デフォルトの設定でパスワードが生成されます。
+Generates a password with default settings.
 
-```
+````
 generate-strong-password -l 12 -C 1 -c 0 -n 1 -s 0
 ```
 
-英大文字と数字が均等に現れる12文字のパスワードが生成されます。
+Generates a 12-character password with equal parts uppercase letters and numbers.
 
-重みが0以外の種類の文字は必ず1つ以上含まれます。
+It must contain at least one character of any kind with a non-zero weight.
 
 
-```
+````
 generate-strong-password --symbol-sets "@%&"
 ```
 
-登場する記号が`@%&`の３種類の中から選ばれてパスワードが生成されます。
+The password will be generated with one of the three types of symbols that appear as ``@%&``.
 
 ```
 generate-strong-password -l 3
 ```
 
-デフォルトでは4種類の文字が最低1文字ずつパスワードに入るため、3文字のパスワードは生成できません。このコマンドはエラーになります。
+A 3-character password cannot be generated because by default, at least one of each of the four types of characters will be in the password. This command will result in an error.
+
+## License
+
+This project is released under the MIT License. See the [LICENSE](https://github.com/kyuki3rain/generate-strong-password/blob/master/LICENSE) file for more information.
+
+
+## Developer
+- [kyuki3rain](https://github.com/kyuki3rain)
+
+Please report any questions or bugs to the Issues page.
+
+Translated with www.DeepL.com/Translator (free version)
