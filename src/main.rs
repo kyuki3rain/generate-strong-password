@@ -40,11 +40,18 @@ fn main() {
     let weights = vec![args.uppercase, args.lowercase, args.numbers, args.symbols];
 
     if weights.iter().all(|&x| x == 0) {
-        panic!("Please specify at least one type of character to include");
+        eprintln!("Error: Please specify at least one type of character to include");
+        std::process::exit(1);
     }
 
     let mut rng = rand::thread_rng();
     let generator = PasswordGenerator::new(password_length, weights, &args.symbol_sets);
 
-    println!("↓↓↓ Generated password ↓↓↓\n{}", generator.gen(&mut rng));
+    match generator.gen(&mut rng) {
+        Ok(password) => println!("{}", password),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            std::process::exit(1);
+        }
+    }
 }

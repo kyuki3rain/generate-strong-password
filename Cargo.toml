@@ -1,9 +1,14 @@
 [package]
 name = "generate-strong-password"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+version = "0.1.1"
+edition = "2024"
+description = "A command line tool for generating strong passwords"
+license = "MIT"
+repository = "https://github.com/kyuki3rain/generate-strong-password"
+homepage = "https://github.com/kyuki3rain/generate-strong-password"
+keywords = ["password", "generator", "cli", "security"]
+categories = ["command-line-utilities"]
+readme = "README.md"
 
 [dependencies]
 clap = { version = "4.3.3", features = ["derive"] }

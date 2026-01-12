@@ -1,18 +1,51 @@
 # generate-strong-password
 
-generate-strong-password is a command line tool for generating strong passwords. This tool allows you to create a secure password based on a specified length or combination of characters.
+[![Crates.io](https://img.shields.io/crates/v/generate-strong-password.svg)](https://crates.io/crates/generate-strong-password)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Installations
+[日本語版 README](README.ja.md)
+
+A command line tool for generating strong passwords. This tool allows you to create a secure password based on a specified length or combination of characters.
+
+## Installation
+
+### Using cargo install
 
 ```shell
-sudo mkdir -p /usr/local/generate-strong-password/bin
-curl -L https://github.com/kyuki3rain/generate-strong-password/releases/download/v0.1.0/generate-strong-password_v0.1.0_x86_64-unknown-linux-musl.tar.gz -o ./generate-strong-password.tar.gz
-tar -zxvf generate-strong-password.tar.gz
-rm generate-strong-password.tar.gz
-sudo mv ./generate-strong-password /usr/local/generate-strong-password/bin
-echo 'export PATH=$PATH:/usr/local/generate-strong-password/bin' >> ~/.bashrc
-source ~/.bashrc
+cargo install generate-strong-password
 ```
+
+### Using cargo binstall (Recommended)
+
+If you have [cargo-binstall](https://github.com/cargo-bins/cargo-binstall) installed, you can install the pre-built binary:
+
+```shell
+cargo binstall generate-strong-password
+```
+
+### From GitHub Releases
+
+Download the binary for your platform from [GitHub Releases](https://github.com/kyuki3rain/generate-strong-password/releases).
+
+#### Linux
+
+```shell
+curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password_x86_64-unknown-linux-musl.tar.gz | tar xz
+sudo mv generate-strong-password /usr/local/bin/
+```
+
+#### macOS
+
+```shell
+curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password_x86_64-apple-darwin.zip -o gsp.zip
+unzip gsp.zip
+sudo mv generate-strong-password /usr/local/bin/
+rm gsp.zip
+```
+
+#### Windows
+
+Download `generate-strong-password_x86_64-pc-windows-gnu.zip` from [Releases](https://github.com/kyuki3rain/generate-strong-password/releases) and extract it.
 
 ## Usage
 
@@ -20,53 +53,47 @@ source ~/.bashrc
 generate-strong-password [OPTIONS]
 ```
 
-Available options are:
+### Options
 
-- -l, --length <LENGTH>           : Sets the length of the password. Default is `16`.
-- -C, --uppercase <UPPERCASE>     : Sets the weight of uppercase alphabets. Default is `4`.
-- -c, --lowercase <LOWERCASE>     : set weight of lowercase alphabet. Default is `4`.
-- -n, --numbers <NUMBERS>         : set weights of numbers. Default is `4`.
-- -s, --symbols <SYMBOLS>         : set weights of symbols. Default is `1`.
--   , --symbol-sets <SYMBOL-SETS> : Sets symbol sets to be included in the password. Default is `!$%&'()*+,/;<=>? []^{}~`
-- -h, --help                      : Display help.
-- -V, --version                   : Display version.
-
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-l, --length <LENGTH>` | Password length | `16` |
+| `-C, --uppercase <UPPERCASE>` | Weight of uppercase letters | `4` |
+| `-c, --lowercase <LOWERCASE>` | Weight of lowercase letters | `4` |
+| `-n, --numbers <NUMBERS>` | Weight of numbers | `4` |
+| `-s, --symbols <SYMBOLS>` | Weight of symbols | `1` |
+| `--symbol-sets <SYMBOL-SETS>` | Symbol characters to use | ``!$%&'()*+,/;<=>?[]^{}~`` |
+| `-h, --help` | Display help | |
+| `-V, --version` | Display version | |
 
 ## Examples
+
+Generate a password with default settings:
 
 ```shell
 generate-strong-password
 ```
 
-Generates a password with default settings.
+Generate a 12-character password with only uppercase letters and numbers:
 
 ```shell
 generate-strong-password -l 12 -C 1 -c 0 -n 1 -s 0
 ```
 
-Generates a 12-character password with equal parts uppercase letters and numbers.
-
-It must contain at least one character of any kind with a non-zero weight.
-
+Generate a password using only specific symbols (`@%&`):
 
 ```shell
 generate-strong-password --symbol-sets "@%&"
 ```
 
-The password will be generated with one of the three types of symbols that appear as `@%&`.
-
-```shell
-generate-strong-password -l 3
-```
-
-A 3-character password cannot be generated because by default, at least one of each of the four types of characters will be in the password. This command will result in an error.
+**Note:** The password must contain at least one character of each type with a non-zero weight. For example, with default settings (4 types), the minimum length is 4 characters.
 
 ## License
 
-This project is released under the MIT License. See the [LICENSE](https://github.com/kyuki3rain/generate-strong-password/blob/master/LICENSE) file for more information.
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
+## Author
 
-## Developer
 - [kyuki3rain](https://github.com/kyuki3rain)
 
-Please report any questions or bugs to the Issues page.
+Please report any questions or bugs on the [Issues](https://github.com/kyuki3rain/generate-strong-password/issues) page.

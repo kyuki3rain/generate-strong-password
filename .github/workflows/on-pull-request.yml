@@ -2,17 +2,18 @@ name: Rust lint & test
 
 on: pull_request
 
+env:
+  CARGO_TERM_COLOR: always
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Crate
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Set Toolchain
-      # https://github.com/dtolnay/rust-toolchain
-      uses: dtolnay/rust-toolchain@master
+      uses: dtolnay/rust-toolchain@stable
       with:
-        toolchain: stable
         components: rustfmt, clippy
     - name: Run check
       run: cargo check
@@ -26,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Crate
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Set Toolchain
       uses: dtolnay/rust-toolchain@stable
     - name: Run test

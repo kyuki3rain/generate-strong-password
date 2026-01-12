@@ -35,14 +35,14 @@ impl PasswordGenerator {
         }
     }
 
-    pub fn gen(&self, rng: &mut ThreadRng) -> String {
+    pub fn gen(&self, rng: &mut ThreadRng) -> Result<String, String> {
         let mut password = self.gen_minimum_password(rng);
 
         if self.length < password.len() {
-            panic!(
-                "Password length must be greater than or equal to {}",
+            return Err(format!(
+                "Password length must be at least {} (one character per enabled type)",
                 password.len()
-            );
+            ));
         }
 
         for _ in password.len()..self.length {
@@ -51,7 +51,7 @@ impl PasswordGenerator {
 
         password.shuffle(rng);
 
-        password.into_iter().collect::<String>()
+        Ok(password.into_iter().collect::<String>())
     }
 
     fn choose(&self, rng: &mut ThreadRng) -> char {
@@ -88,15 +88,14 @@ mod tests {
         let mut rng = rand::thread_rng();
         let password_generator = PasswordGenerator::new(10, vec![1, 1, 1, 1], "!@#$%^&*()");
 
-        assert_eq!(password_generator.gen(&mut rng).len(), 10);
+        assert_eq!(password_generator.gen(&mut rng).unwrap().len(), 10);
     }
 
     #[test]
-    #[should_panic]
-    fn test_gen_panic() {
+    fn test_gen_error_when_length_too_short() {
         let mut rng = rand::thread_rng();
         let password_generator = PasswordGenerator::new(3, vec![1, 1, 1, 1], "!@#$%^&*()");
 
-        password_generator.gen(&mut rng);
+        assert!(password_generator.gen(&mut rng).is_err());
     }
 }
