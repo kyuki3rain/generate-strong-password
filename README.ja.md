@@ -30,22 +30,27 @@ cargo binstall generate-strong-password
 #### Linux
 
 ```shell
-curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password_x86_64-unknown-linux-musl.tar.gz | tar xz
+curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password-v0.1.1-x86_64-unknown-linux-gnu.tar.gz | tar xz
 sudo mv generate-strong-password /usr/local/bin/
 ```
 
-#### macOS
+#### macOS (Intel)
 
 ```shell
-curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password_x86_64-apple-darwin.zip -o gsp.zip
-unzip gsp.zip
+curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password-v0.1.1-x86_64-apple-darwin.tar.gz | tar xz
 sudo mv generate-strong-password /usr/local/bin/
-rm gsp.zip
+```
+
+#### macOS (Apple Silicon)
+
+```shell
+curl -L https://github.com/kyuki3rain/generate-strong-password/releases/latest/download/generate-strong-password-v0.1.1-aarch64-apple-darwin.tar.gz | tar xz
+sudo mv generate-strong-password /usr/local/bin/
 ```
 
 #### Windows
 
-[Releases](https://github.com/kyuki3rain/generate-strong-password/releases) から `generate-strong-password_x86_64-pc-windows-gnu.zip` をダウンロードして解凍してください。
+[Releases](https://github.com/kyuki3rain/generate-strong-password/releases) から `generate-strong-password-v0.1.1-x86_64-pc-windows-msvc.zip` をダウンロードして解凍してください。
 
 ## 使用法
 
