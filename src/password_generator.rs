@@ -35,7 +35,7 @@ impl PasswordGenerator {
         }
     }
 
-    pub fn gen(&self, rng: &mut ThreadRng) -> Result<String, String> {
+    pub fn generate(&self, rng: &mut ThreadRng) -> Result<String, String> {
         let mut password = self.gen_minimum_password(rng);
 
         if self.length < password.len() {
@@ -88,7 +88,7 @@ mod tests {
         let mut rng = rand::thread_rng();
         let password_generator = PasswordGenerator::new(10, vec![1, 1, 1, 1], "!@#$%^&*()");
 
-        assert_eq!(password_generator.gen(&mut rng).unwrap().len(), 10);
+        assert_eq!(password_generator.generate(&mut rng).unwrap().len(), 10);
     }
 
     #[test]
@@ -96,6 +96,6 @@ mod tests {
         let mut rng = rand::thread_rng();
         let password_generator = PasswordGenerator::new(3, vec![1, 1, 1, 1], "!@#$%^&*()");
 
-        assert!(password_generator.gen(&mut rng).is_err());
+        assert!(password_generator.generate(&mut rng).is_err());
     }
 }

@@ -47,7 +47,7 @@ fn main() {
     let mut rng = rand::thread_rng();
     let generator = PasswordGenerator::new(password_length, weights, &args.symbol_sets);
 
-    match generator.gen(&mut rng) {
+    match generator.generate(&mut rng) {
         Ok(password) => println!("{}", password),
         Err(e) => {
             eprintln!("Error: {}", e);
